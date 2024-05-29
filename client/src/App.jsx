@@ -1,31 +1,64 @@
-import io from "socket.io-client";
-import { useState, useEffect } from "react";
+import { useBomb } from "./context/BombContext";
 import { Sidebar } from "./components/Sidebar";
-
-const socket = io("http://localhost:3000");
+import { PowerIcon, XCircleIcon } from "@heroicons/react/24/solid";
+import LineChart from "./components/charts/LineChart";
+import BarChart from "./components/charts/BarChart";
+import RadarChart from "./components/charts/RadarChart";
 
 function App() {
-  const [bomb, setBomb] = useState(false);
-  const [bombController, setBombController] = useState(false);
-
-  const handleBomb = () => {
-    setBomb(!bomb);
-    socket.emit("turnOnBomb", bomb);
-  };
-
-  useEffect(() => {
-    socket.on("bomb", (bombState) => {
-      setBombController(bombState);
-    });
-  }, [bomb]);
+  const { handleBomb, bombController, usersCount } = useBomb();
 
   return (
-    <div>
+    <div
+      className={
+        bombController
+          ? "flex !bg-gradient-to-br from-deep-sapphire-400 to-deep-sapphire-700/50 gap-10"
+          : "flex bg-deep-sapphire-50 gap-10"
+      }
+    >
       <Sidebar />
-      <button onClick={handleBomb} className="bg-slate-400">
-        Encender Bomba
-      </button>
-      <h2>La bomba esta: {bombController ? "encendida" : "apagada"}</h2>
+      <div className="">
+        <div className="flex justify-between py-3  hover:cursor-pointer">
+          <div className="flex" onClick={handleBomb}>
+            {bombController ? (
+              <XCircleIcon
+                className={
+                  bombController
+                    ? "w-10 h-10 text-white"
+                    : "w-10 h-10 text-black"
+                }
+              />
+            ) : (
+              <PowerIcon
+                className={
+                  bombController
+                    ? "w-10 h-10 text-white"
+                    : "w-10 h-10 text-black"
+                }
+              />
+            )}
+
+            <button className="bg-slate-400 p-2 rounded text-white font-bold">
+              <h2 className={bombController ? "text-white" : "text-black"}>
+                La bomba está: {bombController ? "encendida" : "apagada"}
+              </h2>
+            </button>
+          </div>
+          <h3
+            className={
+              bombController ? "text-white font-bold" : "text-black font-bold"
+            }
+          >
+            {usersCount / 2}
+          </h3>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-3 items-center">
+          <LineChart />
+          <BarChart />
+          <RadarChart />
+          <LineChart />
+        </div>
+      </div>
     </div>
   );
 }

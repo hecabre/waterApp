@@ -1,12 +1,9 @@
-import React from "react";
 import {
   Card,
   Typography,
   List,
   ListItem,
   ListItemPrefix,
-  ListItemSuffix,
-  Chip,
 } from "@material-tailwind/react";
 import {
   PresentationChartBarIcon,
@@ -17,73 +14,95 @@ import {
   PowerIcon,
 } from "@heroicons/react/24/solid";
 import { useTheme } from "../context/ThemeContext";
+import { useBomb } from "../context/BombContext";
 
 export function Sidebar() {
   const { theme, toggleTheme } = useTheme();
+  const { bombController } = useBomb();
 
   return (
     <Card
-      className={`h-[calc(100vh-2rem)] w-full max-w-[20rem] p-4 shadow-xl
-      ${
-        theme === "dark"
-          ? "!bg-gradient-to-br from-deep-sapphire-400 to-deep-sapphire-600 text-deep-sapphire-100"
-          : "bg-white text-black"
-      }`}
+      className={`w-full max-w-[20rem] p-4 shadow-xl !rounded-tr-none !rounded-tl-none !rounded-bl-md !rounded-br-md transition-colors backdrop-blur-lg bg-white/5
+      ${theme === "dark" ? " text-deep-sapphire-100" : "bg-white text-black"}`}
     >
       <div className="mb-2 p-4">
         <Typography
           variant="h5"
           className={
-            theme === "dark" ? "!text-deep-sapphire-50" : "!text-slate-200"
+            bombController ? "!text-deep-sapphire-50" : "!text-black  "
           }
         >
-          Sidebar
+          Water Flow App
         </Typography>
-        <button onClick={toggleTheme} className="mt-4 p-2 border rounded">
-          Cambiar Tema
-        </button>
       </div>
       <List>
-        <ListItem>
+        <ListItem
+          className={
+            bombController
+              ? "!text-deep-sapphire-50 hover:!bg-deep-sapphire-50 hover:!text-deep-sapphire-400 transition-colors"
+              : "!text-black hover:!bg-black hover:!text-white transition-colors"
+          }
+        >
           <ListItemPrefix>
-            <PresentationChartBarIcon className="h-5 w-5" />
+            <PresentationChartBarIcon className="w-5 h-5" />
           </ListItemPrefix>
           Dashboard
         </ListItem>
-        <ListItem>
+        <ListItem
+          className={
+            bombController
+              ? "!text-deep-sapphire-50 hover:!bg-deep-sapphire-50 hover:!text-deep-sapphire-400 transition-colors"
+              : "!text-black hover:!bg-black hover:!text-white transition-colors"
+          }
+        >
           <ListItemPrefix>
             <ShoppingBagIcon className="h-5 w-5" />
           </ListItemPrefix>
           E-Commerce
         </ListItem>
-        <ListItem>
+        <ListItem
+          className={
+            bombController
+              ? "!text-deep-sapphire-50 hover:!bg-deep-sapphire-50 hover:!text-deep-sapphire-400 transition-colors"
+              : "!text-black hover:!bg-black hover:!text-white transition-colors"
+          }
+        >
           <ListItemPrefix>
             <InboxIcon className="h-5 w-5" />
           </ListItemPrefix>
           Inbox
-          <ListItemSuffix>
-            <Chip
-              value="14"
-              size="sm"
-              variant="ghost"
-              color="blue-gray"
-              className="rounded-full"
-            />
-          </ListItemSuffix>
         </ListItem>
-        <ListItem>
+        <ListItem
+          className={
+            bombController
+              ? "!text-deep-sapphire-50 hover:!bg-deep-sapphire-50 hover:!text-deep-sapphire-400 transition-colors"
+              : "!text-black hover:!bg-black hover:!text-white transition-colors"
+          }
+        >
           <ListItemPrefix>
             <UserCircleIcon className="h-5 w-5" />
           </ListItemPrefix>
           Profile
         </ListItem>
-        <ListItem>
+        <ListItem
+          className={
+            bombController
+              ? "!text-deep-sapphire-50 hover:!bg-deep-sapphire-50 hover:!text-deep-sapphire-400 transition-colors"
+              : "!text-black hover:!bg-black hover:!text-white transition-colors"
+          }
+        >
           <ListItemPrefix>
             <Cog6ToothIcon className="h-5 w-5" />
           </ListItemPrefix>
           Settings
         </ListItem>
-        <ListItem>
+        <ListItem
+          className={
+            bombController
+              ? "!text-deep-sapphire-50 hover:!bg-deep-sapphire-50 hover:!text-deep-sapphire-400 transition-colors"
+              : "!text-black  hover:!bg-black hover:!text-white transition-colors"
+          }
+        >
           <ListItemPrefix>
             <PowerIcon className="h-5 w-5" />
           </ListItemPrefix>

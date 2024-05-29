@@ -11,6 +11,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const server = http.createServer(app);
 
 let users = 0;
+let bombState = false; // Estado inicial de la bomba
 
 const io = new SocketServer(server, {
   cors: {
@@ -20,10 +21,22 @@ const io = new SocketServer(server, {
 
 io.on("connection", (socket) => {
   users++;
-  console.log("User connected " + users);
-  socket.on("turnOnBomb", (bombState) => {
-    console.log(bombState);
-    socket.broadcast.emit("bomb", bombState);
+  console.log("User connected. Total users: " + users);
+  io.emit("usersCount", users);
+
+  // Enviar el estado inicial de la bomba al nuevo cliente
+  socket.emit("initialBombState", bombState);
+
+  socket.on("disconnect", () => {
+    users--;
+    console.log("User disconnected. Total users: " + users);
+    io.emit("usersCount", users);
+  });
+
+  socket.on("turnOnBomb", (newBombState) => {
+    bombState = newBombState;
+    console.log("Bomb state: ", bombState);
+    io.emit("bomb", bombState);
   });
 });
 
