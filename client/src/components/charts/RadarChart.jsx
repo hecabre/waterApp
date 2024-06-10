@@ -63,26 +63,30 @@ const RadarChart = () => {
   ];
 
   return (
-    <Card className="rounded-lg transition-colors backdrop-blur-lg bg-white/10">
+    <Card className="rounded-lg transition-colors backdrop-blur-lg bg-white/10 ">
       <CardHeader
         floated={false}
         shadow={false}
         color="transparent"
-        className="flex flex-col gap-4 rounded-none md:flex-row md:items-center"
+        className="flex flex-col gap-4 rounded-none md:flex-row md:items-center transition-colors"
       >
         <div
           className={
             bombController
-              ? "w-max rounded-lg border-white border p-5 text-white"
-              : "w-max rounded-lg border-black border p-5 text-black"
+              ? "w-max rounded-lg border-white border p-5 text-white transition-colors"
+              : "w-max rounded-lg border-black border p-5 text-black transition-colors"
           }
         >
-          <Square3Stack3DIcon className="h-6 w-6" />
+          <Square3Stack3DIcon className="h-6 w-6 transition-colors" />
         </div>
         <div>
           <Typography
             variant="h6"
-            className={bombController ? "text-white" : "text-black"}
+            className={
+              bombController
+                ? "text-white transition-colors"
+                : "text-black transition-colors"
+            }
           >
             Niveles de agua
           </Typography>
@@ -90,21 +94,25 @@ const RadarChart = () => {
             variant="small"
             className={
               bombController
-                ? "max-w-sm font-normal text-white"
-                : "max-w-sm font-normal text-black"
+                ? "max-w-sm font-normal text-white transition-colors"
+                : "max-w-sm font-normal text-black transition-colors"
             }
           >
             Grafica que muestra los niveles del agua en los ultimos dos meses
           </Typography>
         </div>
       </CardHeader>
-      <CardBody className="px-2 pb-0">
+      <CardBody className="px-2 pb-0 transition-colors">
         <Chart
           options={options}
           series={series}
           type="radar"
           height={350}
-          className={bombController ? " text-white" : "border-black text-black"}
+          className={
+            bombController
+              ? " text-white transition-colors"
+              : "border-black text-black transition-colors"
+          }
         />
       </CardBody>
     </Card>

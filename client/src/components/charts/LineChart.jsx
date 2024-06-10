@@ -102,26 +102,36 @@ export default function LineChart() {
   };
 
   return (
-    <Card className="rounded-lg transition-colors backdrop-blur-lg bg-white/10">
+    <Card className="rounded-lg  backdrop-blur-lg bg-white/10 transition-colors">
       <CardHeader
         floated={false}
         shadow={false}
         color="transparent"
-        className="flex flex-col gap-4 rounded-none md:flex-row md:items-center"
+        className="flex flex-col gap-4 rounded-none md:flex-row md:items-center transition-colors"
       >
         <div
           className={
             bombController
-              ? "w-max rounded-lg border-white border p-5 text-white"
-              : "w-max rounded-lg border-black border p-5 text-black"
+              ? "w-max rounded-lg border-white border p-5 text-white transition-colors"
+              : "w-max rounded-lg border-black border p-5 text-black transition-colors"
           }
         >
-          <Square3Stack3DIcon className="h-6 w-6" />
+          <Square3Stack3DIcon
+            className={
+              bombController
+                ? "text-white w-6 h-6 transition-colors"
+                : "text-black w-6 h-6 transition-colors"
+            }
+          />
         </div>
         <div>
           <Typography
             variant="h6"
-            className={bombController ? "text-white" : "text-black"}
+            className={
+              bombController
+                ? "text-white transition-colors"
+                : "text-black transition-colors"
+            }
           >
             Presion
           </Typography>
@@ -129,8 +139,8 @@ export default function LineChart() {
             variant="small"
             className={
               bombController
-                ? "max-w-sm font-normal text-white"
-                : "max-w-sm font-normal text-black"
+                ? "text-white transition-colors"
+                : "text-black transition-colors"
             }
           >
             Grafica de la presion por pulgada, en x las pulgadas y en Y la
@@ -138,7 +148,7 @@ export default function LineChart() {
           </Typography>
         </div>
       </CardHeader>
-      <CardBody className="px-2 pb-0">
+      <CardBody className="px-2 pb-0 transition-colors">
         <Chart {...chartConfig} />
       </CardBody>
     </Card>

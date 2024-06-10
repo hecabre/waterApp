@@ -31,7 +31,6 @@ function BombProvider({ children }) {
     socket.on("connect", () => {
       console.log("Socket connected");
 
-      // Solicitar el estado inicial de la bomba
       socket.on("initialBombState", (initialState) => {
         console.log("Initial bomb state received: ", initialState);
         setBomb(initialState);

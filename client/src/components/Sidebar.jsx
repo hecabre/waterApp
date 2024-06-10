@@ -1,114 +1,87 @@
+import React from "react";
 import {
-  Card,
+  IconButton,
   Typography,
   List,
   ListItem,
   ListItemPrefix,
+  Drawer,
+  Card,
 } from "@material-tailwind/react";
+import { TfiDashboard } from "react-icons/tfi";
+import { GiWaterTank } from "react-icons/gi";
+import { GiWaterfall } from "react-icons/gi";
 import {
-  PresentationChartBarIcon,
-  ShoppingBagIcon,
   UserCircleIcon,
   Cog6ToothIcon,
-  InboxIcon,
   PowerIcon,
 } from "@heroicons/react/24/solid";
-import { useTheme } from "../context/ThemeContext";
-import { useBomb } from "../context/BombContext";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 
 export function Sidebar() {
-  const { theme, toggleTheme } = useTheme();
-  const { bombController } = useBomb();
+  const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
+
+  const openDrawer = () => setIsDrawerOpen(true);
+  const closeDrawer = () => setIsDrawerOpen(false);
 
   return (
-    <Card
-      className={`w-full max-w-[20rem] p-4 shadow-xl !rounded-tr-none !rounded-tl-none !rounded-bl-md !rounded-br-md transition-colors backdrop-blur-lg bg-white/5
-      ${theme === "dark" ? " text-deep-sapphire-100" : "bg-white text-black"}`}
-    >
-      <div className="mb-2 p-4">
-        <Typography
-          variant="h5"
-          className={
-            bombController ? "!text-deep-sapphire-50" : "!text-black  "
-          }
+    <div className="items-start flex py-2">
+      <IconButton variant="text" size="lg" onClick={openDrawer}>
+        {isDrawerOpen ? (
+          <XMarkIcon className="h-8 w-8 stroke-2" />
+        ) : (
+          <Bars3Icon className="h-8 w-8 stroke-2" />
+        )}
+      </IconButton>
+      <Drawer open={isDrawerOpen} onClose={closeDrawer}>
+        <Card
+          color="transparent"
+          shadow={false}
+          className="min-h-full w-full p-4"
         >
-          Water Flow App
-        </Typography>
-      </div>
-      <List>
-        <ListItem
-          className={
-            bombController
-              ? "!text-deep-sapphire-50 hover:!bg-deep-sapphire-50 hover:!text-deep-sapphire-400 transition-colors"
-              : "!text-black hover:!bg-black hover:!text-white transition-colors"
-          }
-        >
-          <ListItemPrefix>
-            <PresentationChartBarIcon className="w-5 h-5" />
-          </ListItemPrefix>
-          Dashboard
-        </ListItem>
-        <ListItem
-          className={
-            bombController
-              ? "!text-deep-sapphire-50 hover:!bg-deep-sapphire-50 hover:!text-deep-sapphire-400 transition-colors"
-              : "!text-black hover:!bg-black hover:!text-white transition-colors"
-          }
-        >
-          <ListItemPrefix>
-            <ShoppingBagIcon className="h-5 w-5" />
-          </ListItemPrefix>
-          E-Commerce
-        </ListItem>
-        <ListItem
-          className={
-            bombController
-              ? "!text-deep-sapphire-50 hover:!bg-deep-sapphire-50 hover:!text-deep-sapphire-400 transition-colors"
-              : "!text-black hover:!bg-black hover:!text-white transition-colors"
-          }
-        >
-          <ListItemPrefix>
-            <InboxIcon className="h-5 w-5" />
-          </ListItemPrefix>
-          Inbox
-        </ListItem>
-        <ListItem
-          className={
-            bombController
-              ? "!text-deep-sapphire-50 hover:!bg-deep-sapphire-50 hover:!text-deep-sapphire-400 transition-colors"
-              : "!text-black hover:!bg-black hover:!text-white transition-colors"
-          }
-        >
-          <ListItemPrefix>
-            <UserCircleIcon className="h-5 w-5" />
-          </ListItemPrefix>
-          Profile
-        </ListItem>
-        <ListItem
-          className={
-            bombController
-              ? "!text-deep-sapphire-50 hover:!bg-deep-sapphire-50 hover:!text-deep-sapphire-400 transition-colors"
-              : "!text-black hover:!bg-black hover:!text-white transition-colors"
-          }
-        >
-          <ListItemPrefix>
-            <Cog6ToothIcon className="h-5 w-5" />
-          </ListItemPrefix>
-          Settings
-        </ListItem>
-        <ListItem
-          className={
-            bombController
-              ? "!text-deep-sapphire-50 hover:!bg-deep-sapphire-50 hover:!text-deep-sapphire-400 transition-colors"
-              : "!text-black  hover:!bg-black hover:!text-white transition-colors"
-          }
-        >
-          <ListItemPrefix>
-            <PowerIcon className="h-5 w-5" />
-          </ListItemPrefix>
-          Log Out
-        </ListItem>
-      </List>
-    </Card>
+          <div className="mb-2 flex items-center gap-4 p-4">
+            <img
+              src="https://docs.material-tailwind.com/img/logo-ct-dark.png"
+              alt="brand"
+              className="h-8 w-8"
+            />
+            
+          </div>
+
+          <List>
+            <ListItem>
+              <ListItemPrefix>
+                <TfiDashboard className="h-5 w-5" />
+              </ListItemPrefix>
+              Panel de Control
+            </ListItem>
+            <ListItem>
+              <ListItemPrefix>
+                <GiWaterfall className="h-5 w-5" />
+              </ListItemPrefix>
+              Bomba 1
+            </ListItem>
+            <ListItem>
+              <ListItemPrefix>
+                <GiWaterfall className="h-5 w-5" />
+              </ListItemPrefix>
+              Bomba 2
+            </ListItem>
+            <ListItem>
+              <ListItemPrefix>
+                <GiWaterTank className="h-5 w-5" />
+              </ListItemPrefix>
+              Cisterna
+            </ListItem>
+            <ListItem>
+              <ListItemPrefix>
+                <PowerIcon className="h-5 w-5" />
+              </ListItemPrefix>
+              Cerrar Sesion
+            </ListItem>
+          </List>
+        </Card>
+      </Drawer>
+    </div>
   );
 }

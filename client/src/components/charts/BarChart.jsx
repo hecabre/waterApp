@@ -53,7 +53,17 @@ export default function BarChart() {
             fontWeight: 400,
           },
         },
-        categories: ["Sept", "Oct", "Nov", "Dic", "Enero", "Febrero", "Marzo", "Abril", "Mayo"],
+        categories: [
+          "Sept",
+          "Oct",
+          "Nov",
+          "Dic",
+          "Enero",
+          "Febrero",
+          "Marzo",
+          "Abril",
+          "Mayo",
+        ],
       },
       yaxis: {
         labels: {
@@ -89,42 +99,52 @@ export default function BarChart() {
   };
 
   return (
-    <Card className="rounded-lg transition-colors backdrop-blur-lg bg-white/10">
+    <Card className="rounded-lg backdrop-blur-lg bg-white/10 transition-colors">
       <CardHeader
         floated={false}
         shadow={false}
-        className="flex flex-col gap-4 rounded-none md:flex-row md:items-center !bg-transparent"
+        className="flex flex-col gap-4 rounded-none md:flex-row md:items-center !bg-transparent transition-colors"
       >
         <div
           className={
             bombController
-              ? "w-max rounded-lg border border-white p-5 text-white"
-              : "w-max rounded-lg border-black border p-5 text-white"
+              ? "w-max rounded-lg border border-white p-5 text-white transition-colors"
+              : "w-max rounded-lg border-black border p-5 text-white transition-colors"
           }
         >
           <Square3Stack3DIcon
             className={
-              bombController ? "text-white h-6 w-6" : "text-black h-6 w-6"
+              bombController
+                ? "text-white h-6 w-6 transition-colors"
+                : "text-black h-6 w-6 transition-colors"
             }
           />
         </div>
         <div>
           <Typography
             variant="h6"
-            className={bombController ? "text-white" : "text-black"}
+            className={
+              bombController
+                ? "text-white transition-colors"
+                : "text-black transition-colors"
+            }
           >
             Litros por mes
           </Typography>
           <Typography
             variant="small"
             color="gray"
-            className={bombController ? "text-white" : "text-black"}
+            className={
+              bombController
+                ? "text-white transition-colors"
+                : "text-black transition-colors"
+            }
           >
             Cantidad de litros bombeados por mes
           </Typography>
         </div>
       </CardHeader>
-      <CardBody className="px-2 pb-0">
+      <CardBody className="px-2 pb-0 transition-colors">
         <Chart {...chartConfig} />
       </CardBody>
     </Card>
