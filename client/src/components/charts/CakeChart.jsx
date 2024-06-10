@@ -20,9 +20,9 @@ export const CakeChart = () => {
       labels: [
         "Jimenez Martha",
         "Santillan Dante",
-        "Daddy Yankee",
-        "El Boo",
-        "Yerimua",
+        "María García",
+        "Antonio Martínez",
+        "Laura Sánchez",
       ],
       legend: {
         position: "bottom",

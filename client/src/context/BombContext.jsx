@@ -17,14 +17,29 @@ function BombProvider({ children }) {
   }
 
   const socket = socketRef.current;
-  const [bomb, setBomb] = useState(false);
-  const [bombController, setBombController] = useState(false);
+  const [bomb1, setBomb1] = useState(false);
+  const [bomb2, setBomb2] = useState(false);
+  const [bombController, setBombController] = useState(null);
   const [usersCount, setUsersCount] = useState(0);
 
-  const handleBomb = () => {
-    const newBombState = !bomb;
-    setBomb(newBombState);
-    socket.emit("turnOnBomb", newBombState);
+  const handleBomb1 = () => {
+    if (!bomb2) {
+      const newBombState = !bomb1;
+      setBomb1(newBombState);
+      socket.emit("turnOnBomb1");
+    } else {
+      console.log("Bomb 2 is already on, cannot turn on Bomb 1");
+    }
+  };
+
+  const handleBomb2 = () => {
+    if (!bomb1) {
+      const newBombState = !bomb2;
+      setBomb2(newBombState);
+      socket.emit("turnOnBomb2");
+    } else {
+      console.log("Bomb 1 is already on, cannot turn on Bomb 2");
+    }
   };
 
   useEffect(() => {
@@ -33,8 +48,9 @@ function BombProvider({ children }) {
 
       socket.on("initialBombState", (initialState) => {
         console.log("Initial bomb state received: ", initialState);
-        setBomb(initialState);
-        setBombController(initialState);
+        setBomb1(initialState.bomb1);
+        setBomb2(initialState.bomb2);
+        setBombController(initialState.bomb1 || initialState.bomb2);
       });
     });
 
@@ -42,10 +58,16 @@ function BombProvider({ children }) {
       console.log("Socket disconnected");
     });
 
-    socket.on("bomb", (bombState) => {
-      console.log("Bomb state received from server: ", bombState);
-      setBomb(bombState);
-      setBombController(bombState);
+    socket.on("bomb1", (bombState) => {
+      console.log("Bomb 1 state received from server: ", bombState);
+      setBomb1(bombState);
+      setBombController(bombState || bomb2);
+    });
+
+    socket.on("bomb2", (bombState) => {
+      console.log("Bomb 2 state received from server: ", bombState);
+      setBomb2(bombState);
+      setBombController(bombState || bomb1);
     });
 
     socket.on("usersCount", (count) => {
@@ -56,15 +78,24 @@ function BombProvider({ children }) {
     return () => {
       socket.off("connect");
       socket.off("disconnect");
-      socket.off("bomb");
+      socket.off("bomb1");
+      socket.off("bomb2");
       socket.off("usersCount");
       socket.off("initialBombState");
     };
-  }, [socket]);
+  }, [socket, bomb1, bomb2]);
 
   return (
     <BombContext.Provider
-      value={{ handleBomb, bomb, bombController, socket, usersCount }}
+      value={{
+        handleBomb1,
+        handleBomb2,
+        bomb1,
+        bomb2,
+        bombController,
+        socket,
+        usersCount,
+      }}
     >
       {children}
     </BombContext.Provider>
